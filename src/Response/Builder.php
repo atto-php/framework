@@ -18,7 +18,9 @@ final class Builder
 
     public function buildResponse(mixed $result): ResponseInterface
     {
-        if ($result instanceof \Throwable) {
+        if ($result instanceof ResponseInterface) {
+            return $result;
+        } elseif ($result instanceof \Throwable) {
             $response = $this->errorHandler->convertFromThrowable($result);
         } elseif ($result instanceof HasResponseInfo) {
             $response = $this->psr17Factory->createResponse($result->getStatusCode())->withBody(
