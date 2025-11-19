@@ -27,10 +27,10 @@
       "Atto\\Framework\\": "src/"
     }
   },
-
   "autoload-dev": {
     "psr-4": {
-      "Atto\\Framework\\Tests\\": "tests/"
+      "Atto\\Framework\\Tests\\Unit\\": "tests/unit/",
+      "Atto\\Framework\\Tests\\Integration\\": "tests/integration/"
     }
   },
   "config": {

@@ -20,29 +20,6 @@ final class Atto
     public const ENV_INTEGRATION = 'integration';
     public const ENV_DEV = 'dev';
 
-    private static function loadServices(ContainerInterface $container, array $serviceConfig)
-    {
-        foreach ($serviceConfig as $service => $config) {
-            if (isset($config['class'])) {
-                $definition = $container->add($service, $config['class']);
-            } elseif (isset($config['factory'])) {
-                $definition = $container->add($service, $config['factory']);
-            } else {
-                $definition = $container->add($service);
-            }
-
-            if (isset($config['args'])) {
-                $definition->addArguments($config['args']);
-            }
-
-            foreach ($config['tags'] ?? [] as $tag) {
-                $definition->addTag($tag);
-            }
-
-            $definition->setShared($config['shared'] ?? true);
-        }
-    }
-
     public static function buildContainer(array $applicationConfig): ContainerInterface
     {
         $config = [];
@@ -53,11 +30,13 @@ final class Atto
         $container = new Container();
         $container->add(ContainerInterface::class, $container);
 
+         $serviceLoader = new ServiceLoader($container);
+
         foreach ($applicationConfig['modules'] as $moduleClass) {
             $module = new $moduleClass($applicationConfig['env']);
             $module instanceof ModuleInterface || throw new \Exception('Module is not a module');
 
-            self::loadServices($container, $module->getServices());
+            $serviceLoader->loadFromConfig($module->getServices());
             $config[] = $module->getConfig();
         }
 
