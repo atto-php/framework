@@ -1,0 +1,11 @@
+parameters:
+    level: 9
+    paths:
+        - .dagger/src
+        - src
+        - tests/fixture
+    scanDirectories:
+        - .dagger/sdk
+    excludePaths:
+      - tests/fixture/*Test.php
+    tmpDir: .cache/phpstan
