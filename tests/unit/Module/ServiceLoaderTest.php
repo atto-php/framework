@@ -40,9 +40,9 @@ final class ServiceLoaderTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @return \Generator<array{
-     *     0: object,
-     *     1: class-string,
-     *     2: ServiceConfig
+     *     0: object,       // object expected
+     *     1: class-string, // class to provide
+     *     2: ServiceConfig // the config
      * }>
      */
     public static function provideServiceConfigs(): \Generator

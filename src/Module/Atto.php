@@ -30,7 +30,7 @@ final class Atto
         $container = new Container();
         $container->add(ContainerInterface::class, $container);
 
-         $serviceLoader = new ServiceLoader($container);
+        $serviceLoader = new ServiceLoader($container);
 
         foreach ($applicationConfig['modules'] as $moduleClass) {
             $module = new $moduleClass($applicationConfig['env']);
