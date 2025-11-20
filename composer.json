@@ -29,6 +29,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "Atto\\Framework\\Tests\\Fixture\\": "tests/fixture/",
       "Atto\\Framework\\Tests\\Unit\\": "tests/unit/",
       "Atto\\Framework\\Tests\\Integration\\": "tests/integration/"
     }
