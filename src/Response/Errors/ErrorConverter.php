@@ -48,7 +48,7 @@ final class ErrorConverter
         if ($this->debug) {
             //@TODO improve this: add previous exceptions, exception code, class etc
             $problem['exception'] = [
-                'trace' => $throwable->getTrace(),
+                'trace' => $throwable->getTraceAsString(),
                 'message' => $throwable->getMessage(),
             ];
         }
