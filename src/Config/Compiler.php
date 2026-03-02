@@ -27,12 +27,14 @@ final class Compiler
 
 
         array_walk_recursive($config, function (&$value, $key) use ($container) {
-            while (($value instanceof Reference)) {
-                if (!$container->has($value->to)) {
+            while (($value instanceof Reference) || ($value instanceof ReferenceWithDefault)) {
+                if ($container->has($value->to)) {
+                    $value = $container->get($value->to);
+                } elseif ($value instanceof ReferenceWithDefault) {
+                    $value = $value->default;
+                } else {
                     throw new \Exception('Unable to resolve reference');
                 }
-
-                $value = $container->get($value->to);
             }
         });
 
