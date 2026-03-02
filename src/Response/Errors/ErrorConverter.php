@@ -19,9 +19,9 @@ final class ErrorConverter
     public function __construct(
         Psr17Factory $psr17Factory,
         array $handlers = [],
-        bool $debug = false
+        bool $debug = false,
     ) {
-        assert((fn (ErrorHandler $handler) => true)(...$handlers));
+        assert((fn(ErrorHandler $handler) => true)(...$handlers));
         $this->httpConverter = new HttpConverter($psr17Factory);
         $this->handlers = $handlers;
         $this->debug = $debug;
@@ -41,7 +41,7 @@ final class ErrorConverter
 
     private function buildDefaultProblem(\Throwable $throwable): ApiProblem
     {
-        $problem = new ApiProblem('Internal server Error', 'about:blank');
+        $problem = new ApiProblem('Internal Server Error', 'about:blank');
         $problem->setStatus(500);
         $problem->setDetail('An unhandled exception was raised');
 

@@ -8,9 +8,7 @@ use Crell\ApiProblem\ApiProblem;
 
 final class ApiProblemHandler implements ErrorHandler
 {
-    public function __construct(private readonly bool $debug = false)
-    {
-    }
+    public function __construct(private readonly bool $debug = false) {}
 
     public function supports(\Throwable $throwable): bool
     {
