@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Atto\Framework;
 
+use Atto\Framework\Application\ConsoleApplication;
 use Atto\Framework\Application\DefaultApplication;
+use Atto\Framework\Command\AutowireCommands;
+use Atto\Framework\Introspection\ModuleSource;
 use Atto\Framework\Module\ModuleInterface;
 use Atto\Framework\Response\Builder;
 use Atto\Framework\Response\Errors\ApiProblemHandler;
 use Atto\Framework\Response\Errors\ErrorConverter;
 use Atto\Framework\Response\Errors\ErrorHandler;
 use Nyholm\Psr7\Factory\Psr17Factory;
+use Psr\Container\ContainerInterface;
 
 final class Module implements ModuleInterface
 {
@@ -20,6 +24,17 @@ final class Module implements ModuleInterface
             DefaultApplication::class => [
                 'args' => [
                     Builder::class
+                ]
+            ],
+            ModuleSource::class => [
+                'args' => [
+                    'config.modules',
+                ]
+            ],
+            ConsoleApplication::class => [
+                'args' => [
+                    ContainerInterface::class,
+                    'config.commands',
                 ]
             ],
             Builder::class => [
@@ -43,12 +58,22 @@ final class Module implements ModuleInterface
                 'tags' => [
                     ErrorHandler::class
                 ]
+            ],
+            AutowireCommands::class => [
+                'args' => [
+                    ModuleSource::class,
+                    'config.autowire.commands'
+                ]
             ]
         ];
     }
 
     public function getConfig(): array
     {
-        return [];
+        return [
+            'commands' => [
+                'atto:framework:autowire-commands' => AutowireCommands::class,
+            ]
+        ];
     }
 }
