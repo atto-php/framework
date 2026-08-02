@@ -27,6 +27,15 @@ final class Atto
             $config[] = $applicationConfig['globalConfig'];
         }
 
+        $config[] = [
+            'modules' => $applicationConfig['modules'],
+            'autowire' => $applicationConfig['autowire'],
+        ];
+
+        if (file_exists($applicationConfig['autowire']['commands'])) {
+            $config[] = ['commands' => require_once $applicationConfig['autowire']['commands']];
+        }
+
         $container = new Container();
         $container->add(ContainerInterface::class, $container);
 
@@ -58,6 +67,9 @@ final class Atto
             'debug' => false,
             'env' => self::ENV_PROD,
             'application' => DefaultApplication::class,
+            'autowire' => [
+                'commands' => ''
+            ],
         ], $applicationConfig);
 
         $container = self::buildContainer($applicationConfig);
