@@ -42,12 +42,13 @@ class AutowireCommands extends Command
         $classes = [];
 
         foreach($this->moduleSource->getAllClasses() as $class) {
-            $name = $class->getName();
-            $refl = current(new \ReflectionClass($name)->getAttributes(AsCommand::class));
-            if ($refl) {
-                $attr = $refl->newInstance();
-                $classes[$attr->name] = $name;
-            }
+            try {
+                $refl = current($class->getAttributesByName(AsCommand::class));
+                if ($refl) {
+                    $attr = new AsCommand(...$refl->getAttributes());
+                    $classes[$attr->name] = $class->getName();
+                }
+            } catch (\Exception $e) {}
         }
 
         return $classes;
