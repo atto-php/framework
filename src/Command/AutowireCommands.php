@@ -45,7 +45,7 @@ class AutowireCommands extends Command
             try {
                 $refl = current($class->getAttributesByName(AsCommand::class));
                 if ($refl) {
-                    $attr = new AsCommand(...$refl->getAttributes());
+                    $attr = new AsCommand(...$refl->getArguments());
                     $classes[$attr->name] = $class->getName();
                 }
             } catch (\Exception $e) {}
