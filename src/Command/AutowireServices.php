@@ -52,7 +52,7 @@ class AutowireServices extends Command
                 $refl = current($class->getAttributesByName(Service::class));
                 if ($refl) {
                     $attr = new Service(...$refl->getArguments());
-                    $classes[$attr->name ?? '\\' . $class->getName() . '::class'] = [
+                    $classes[$attr->name ?? '\\' . $class->getName()] = [
                         'args' => $this->buildArgs($class)
                     ];
                 }
@@ -88,7 +88,7 @@ class AutowireServices extends Command
                             sprintf('Cannot detect type for property %s, please add an #[Inject] attribute', $param->getName())
                         );
                 }
-                $args[] = '\\' . $type->getName() . '::class';
+                $args[] = '\\' . $type->getName();
             }
         }
 
