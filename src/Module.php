@@ -7,6 +7,7 @@ namespace Atto\Framework;
 use Atto\Framework\Application\ConsoleApplication;
 use Atto\Framework\Application\DefaultApplication;
 use Atto\Framework\Command\AutowireCommands;
+use Atto\Framework\Command\AutowireServices;
 use Atto\Framework\Introspection\ModuleSource;
 use Atto\Framework\Module\ModuleInterface;
 use Atto\Framework\Response\Builder;
@@ -64,6 +65,12 @@ final class Module implements ModuleInterface
                     ModuleSource::class,
                     'config.autowire.commands'
                 ]
+            ],
+            AutowireServices::class => [
+                'args' => [
+                    ModuleSource::class,
+                    'config.autowire.services'
+                ]
             ]
         ];
     }
@@ -73,6 +80,7 @@ final class Module implements ModuleInterface
         return [
             'commands' => [
                 'atto:framework:autowire-commands' => AutowireCommands::class,
+                'atto:framework:autowire-services' => AutowireServices::class,
             ]
         ];
     }

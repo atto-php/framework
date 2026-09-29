@@ -41,6 +41,10 @@ final class Atto
 
         $serviceLoader = new ServiceLoader($container);
 
+        if (file_exists($applicationConfig['autowire']['services'])) {
+            $serviceLoader->loadFromConfig(require_once $applicationConfig['autowire']['services']);
+        }
+
         foreach ($applicationConfig['modules'] as $moduleClass) {
             $module = new $moduleClass($applicationConfig['env']);
             $module instanceof ModuleInterface || throw new \Exception('Module is not a module');
