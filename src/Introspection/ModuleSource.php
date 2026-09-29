@@ -3,6 +3,7 @@
 namespace Atto\Framework\Introspection;
 
 use Roave\BetterReflection\BetterReflection;
+use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflector\DefaultReflector;
 use Roave\BetterReflection\SourceLocator\Type\DirectoriesSourceLocator;
 
@@ -13,6 +14,7 @@ class ModuleSource
 
     }
 
+    /** @return ReflectionClass[] */
     public function getAllClasses(): array
     {
         $astLocator = (new BetterReflection())->astLocator();
