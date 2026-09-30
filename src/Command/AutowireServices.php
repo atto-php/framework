@@ -53,6 +53,7 @@ class AutowireServices extends Command
                 if ($refl) {
                     $attr = new Service(...$refl->getArguments());
                     $classes[$attr->name ?? '\\' . $class->getName()] = [
+                        'class' => '\\' . $class->getName(),
                         'args' => $this->buildArgs($class)
                     ];
                 }
